@@ -1,80 +1,62 @@
 <template>
   <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        vue-todo-1
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+    <main-view
+      :todoList="todoList"
+      @switchFinishFlag="switchFinishFlag"
+    ></main-view>
   </div>
 </template>
-
+ 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
+import MainView from "@/components/page-view/main.vue";
+import TodoItem from "@/model/todo-item";
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: {
+    MainView,
+  },
+
+  data() {
+    return {
+      todoList: new Array<TodoItem>(),
+    };
+  },
+
+  methods: {
+    switchFinishFlag(idx: number) {
+      this.todoList[idx].switchFinishFlag();
+    },
+  },
+
+  async created() {
+    // 그냥 API 인 척
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        const newTodoItem = new TodoItem("id1", false, "title1", "desc1");
+        this.todoList.push(newTodoItem);
+        resolve(this.todoList);
+      }, 1000);
+    });
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        const newTodoItem = new TodoItem("id2", false, "title2", "desc2");
+        this.todoList.push(newTodoItem);
+        resolve(this.todoList);
+      }, 1000);
+    });
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        const newTodoItem = new TodoItem("id3", false, "title3", "desc3");
+        this.todoList.push(newTodoItem);
+        resolve(this.todoList);
+      }, 1000);
+    });
+  },
+});
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
