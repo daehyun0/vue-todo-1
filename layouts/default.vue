@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <Nuxt />
   </div>
 </template>
@@ -58,5 +58,11 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+</style>
+
+<style lang="scss" scoped>
+.layout {
+  @apply p-4 max-w-5xl flex justify-center;
 }
 </style>
